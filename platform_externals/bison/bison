@@ -1,0 +1,13 @@
+#!/bin/bash
+fullscriptname=`which $0`
+localdir=`dirname $fullscriptname`
+export BISON_PKGDATADIR=$localdir/data
+export M4=$localdir/bin/m4
+export PATH=$localdir/bin:$PATH
+if [ $HOSTTYPE == "x86_64" ]; then
+ bison=bison
+else
+ bison=bison32
+fi
+$localdir/bin/$bison $*
+

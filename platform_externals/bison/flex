@@ -1,0 +1,12 @@
+#!/bin/bash
+fullscriptname=`which $0`
+localdir=`dirname $fullscriptname`
+export PATH=$localdir/bin:$PATH
+export m4=$localdir/bin/m4
+if [ $HOSTTYPE == "x86_64" ]; then
+ flex=flex
+else
+ flex=flex32
+fi
+$localdir/bin/$flex $*
+
