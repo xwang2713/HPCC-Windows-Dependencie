@@ -4,15 +4,15 @@
    bootstrap
    .\b2 --with-regex -sICU_PATH=<ICU> variant=debug,release toolset=msvc-9.0 address-model=64 threading=single,multi link=static,shared
    <ICU> is the directory contains ICU "include", "bin64" and "lib64"
-
-4. copy boost_regrex-vc90-mt-1.57.*, boost_regrex-vc90-mt-gd-1.57.*,,libboost_regex-vc90-mt-1_57.lib and
-   libboost_regex-vc90-mt-gd-1_57.lib to \boost\windows-x86_64-vc90\lib\
+   
+4. copy boost_regrex-vc90-mt-1.57.*, boost_regrex-vc90-mt-gd-1.57.*,,libboost_regex-vc90-mt-1_57.lib and libboost_regex-vc90-mt-gd-1_57.lib to 
+   \boost\windows-x86_64-vc90\lib\
 
 5. do the same for 32bit
 
-  
-It is important to has ICU debug libraries available otherwise boost build will not detect ICU.
+6. For x64 debug need build following also: 
+   .\b2 --with-regex -sICU_PATH=<ICU> variant=debug toolset=msvc-9.0 address-model=64 threading=multi link=static runtime-link=static
+   This will create "libboost_regex-vc90-sgd-<version>.lib with is required by /MTd option when build HPCC Platform x64 debug 
+   
+It is import to has ICU debug libraries available otherwise boost build will not detect ICU.
 Make sure when run "b2" you see "- has_icu builds     : yes"
-
-size of libboost_regex-vc90-mt-gd-1_57.lib exceeds github limitation 50MB
-libboost_regex-vc90-mt-gd-1_57.lib.zip is zipped file. unzip it if need compile debug on with 64bit compiler.
