@@ -10,4 +10,6 @@
 			WinCrypt.h
 			Winldap.h
 		lib\
+                   Wldap32.lib
+		lib64\
 		   Wldap32.lib  (from C:\Program Files\Microsoft SDKs\Windows\v6.0A\lib\x64\)
