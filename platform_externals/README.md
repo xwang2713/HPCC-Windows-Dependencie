@@ -97,5 +97,3 @@ ODBC Connector, etc.
      
      The workaround is to copy c:\Program Files(x86)\Microsoft Visual Studio 9.0\VC\redict\Debug_NonRedist\
      amd64\Microsoft.VC90.DebugCRT\*.* to <HPCC Build>\bin\Debug, then run build from Visual Studio (Debug x64)
-
-   
