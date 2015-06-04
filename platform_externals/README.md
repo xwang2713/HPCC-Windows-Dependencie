@@ -1,40 +1,92 @@
 # HPCC-Windows-Dependencie
 
-To build HPCC Platform Community 64bit on Windows:
+HPCC Platform and Clienttool builds are tested with Visual Studio 9 2008 and Visual Studio 12 2013 
+for both 32bit and 64bit. For other Visual Studio version user need re-compile boost-regex. See the 
+readme under boost directory for details. 
 
-1. Make sure Microsoft Visual Studio 9 2008 64bit installed
+## Setup
 
-2. git clone https://github.com/hpcc-systems/HPCC-Platform.git
-
-3. create "build" directory and cd to "build"
-
-3. cmake -G 'Visual Studio 9 2008 Win64' -DCMAKE_BUILD_TYPE=Release -DUSE_NATIVE_LIBRARIES=OFF 
-        -DCHECK_GIT_TAG=0 -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
-		    -DEXTERNALS_DIRECTORY=<platform_externals>  -DUSE_APR=OFF -DUSE_MYSQL=OFF 
-		    -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF -DUSE_MEMCACHED=OFF ../HPCC-Platform
-
-6. cmake --build . --config release  or build directly from Visual Studio
-
-7. Simiar steps are applied for Visual Studio 9 2008 x86 build.
-
-
-Currently there is no HPCC Platform Package build steps as well as start/stop HPCC processes.
-
-There are readme.txt files under each dependened library directory under <platform_externals> which tell
-how to get and build the library.
-
-
-size of Xalan-C_1_11D.pdb and libboost_regex-vc90-mt-gd-1_57.lib exceeds github limitation 50MB
-both are zipped. unzip them if need compile debug on with 64bit compiler.
-1) Microsoft Visual Studio 9 2008 by default may only enable 32bit
+1. Make sure proper Microsoft Visual Studio is installed
+2. Microsoft Visual Studio 9 2008 by default may only enable 32bit
    To add 64bit support re-run the setup.exe select "Add or Remove Features"
    -> Language Tools -> Visual C++. Select "X64Compiler and Tools"
+3. Make sure git package is installed, for example "git bash"  
 
 
-2) when build HPCC Platform debug version x86 if get "LINK : fatal error LNK1000: Internal error during IncrBuildImage"
+## Build 
+
+Get this repository from github: git clone https://github.com/hpcc-systems/HPCC-Windows-Dependencies.git
+
+### HPCC Clienttools
+
+1. git clone https://github.com/hpcc-systems/HPCC-Platform.git
+2. create "build" directory and cd to "build"
+3.  cmake -G '<Visual Studio Generator>' -DCMAKE_BUILD_TYPE=<TYPE> -DCHECK_GIT_TAG=0 -DCLIENTTOOLS_ONLY=ON 
+        -DEXTERNALS_DIRECTORY=<full path of platform_externals directory of this repository>
+        -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
+        -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
+        -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../HPCC-Platform
+    Tested Visual Studio Generator (version and architecture): 
+            Visual Studio 9 2008
+            Visual Studio 9 2008 Win64
+            Visual Studio 12 2013
+            Visual Studio 12 Win64
+    TYPE: Release or Debug
+6. cmake --build . --config <TYPE>  or build directly from Visual Studio
+7. cmake --build . --config <TYPE> --target package
+
+Build Clienttools with Visual Studio 9 2008 Win64 does not work with above method  due to code generation failed.
+See "Troubleshooting 2" for the workaround. Alternatively user can use VC 12 2013 Win64.
+
+### HPCC Platform Libraries
+
+1. git clone https://github.com/hpcc-systems/HPCC-Platform.git
+2. create "build" directory and cd to "build"
+3.  cmake -G '<Visual Studio Generator>' -DCMAKE_BUILD_TYPE=<TYPE>  -DCHECK_GIT_TAG=0 
+        -DEXTERNALS_DIRECTORY=<full path of platform_externals directory of this repository>
+        -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
+        -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
+        -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../HPCC-Platform
+    Tested Visual Studio Generator (version and architecture): 
+            Visual Studio 9 2008
+            Visual Studio 9 2008 Win64
+            Visual Studio 12 2013
+            Visual Studio 12 Win64
+    TYPE: Release or Debug
+6. cmake --build . --config <TYPE>  or build directly from Visual Studio
+
+Currently there is no HPCC Platform Package build step as well as start/stop HPCC processes.
+The HPCC-Platform libraries are mainly used for building other HPCC product, for example
+ODBC Connector, etc.
+
+### LN Clienttools 
+
+'''This is for internal users only'''
+
+1. git clone https://github.com/hpcc-systems/HPCC-Platform.git
+2. git clone https://github.com/hpcc-systems/LN.git
+3. create "build" directory and cd to "build"
+4.  cmake -G '<Visual Studio Generator>' -DCMAKE_BUILD_TYPE=<TYPE> -DCHECK_GIT_TAG=0 -DCLIENTTOOLS_ONLY=ON 
+        -DEXTERNALS_DIRECTORY=<full path of platform_externals directory of this repository>
+        -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
+        -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
+        -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../HPCC-Platform
+    Tested Visual Studio Generator (version and architecture): 
+            Visual Studio 9 2008
+            Visual Studio 9 2008 Win64
+            Visual Studio 12 2013
+            Visual Studio 12 Win64
+    TYPE: Release or Debug
+6. cmake --build . --config <TYPE>  or build directly from Visual Studio
+7. cmake --build . --config <TYPE> --target package
+
+
+## Troubleshooting 
+
+1. When build HPCC Platform debug version x86 if get "LINK : fatal error LNK1000: Internal error during IncrBuildImage"
    download VS90-KB948127.exe to fix it. This is a known problem on VS 9 (2008)
 
-3) Wehn build HPCC Platform debug version x64 and get following error install 
+2. When build HPCC Platform debug version x64 code generation doesn't work and get following error install 
    "http://www.microsoft.com/en-us/download/confirmation.aspx?id=2092
 
      The application has failed to start because its side-by-side configuration is incorrect. Please see the
@@ -46,5 +98,4 @@ both are zipped. unzip them if need compile debug on with 64bit compiler.
      The workaround is to copy c:\Program Files(x86)\Microsoft Visual Studio 9.0\VC\redict\Debug_NonRedist\
      amd64\Microsoft.VC90.DebugCRT\*.* to <HPCC Build>\bin\Debug, then run build from Visual Studio (Debug x64)
 
-
-4) Precomiled icu packages: http://www.npcglib.org/~stathis/blog/precompiled-icu/
+   
