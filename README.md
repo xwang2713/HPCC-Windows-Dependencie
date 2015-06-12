@@ -1,6 +1,6 @@
-# HPCC-Windows-Dependencie
+# HPCC-Windows-Dependencies
 
-This will support following HPCC products built for both 32bit and 64bit
+This will support the following HPCC products built for both 32bit and 64bit
 
 1. HPCC-Platform (platform_externals)
    1. Clienttools Community Version.
