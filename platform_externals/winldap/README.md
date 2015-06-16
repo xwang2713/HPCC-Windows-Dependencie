@@ -1,5 +1,6 @@
 1. Install Microsoft SDKs. For example, v6.0A
 2. create winldap directory and copy following files from Microsoft SDKs
+
      winldap\
 	    include\
 		    BaseTsd.h
