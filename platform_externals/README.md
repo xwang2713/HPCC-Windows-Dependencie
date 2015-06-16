@@ -1,16 +1,16 @@
-# HPCC-Windows-Dependencie
+# HPCC-Windows-Dependencies
 
 HPCC Platform and Clienttool builds are tested with Visual Studio 9 2008 and Visual Studio 12 2013 
-for both 32bit and 64bit. For other Visual Studio version user need re-compile boost-regex. See the 
-readme under boost directory for details. 
+for both 32bit and 64bit. For other Visual Studio versions users need to re-compile boost-regex. 
+See the readme in the boost directory for details. 
 
 ## Setup
 
-1. Make sure proper Microsoft Visual Studio is installed
+1. Verify an approved version Microsoft Visual Studio is properly installed
 2. Microsoft Visual Studio 9 2008 by default may only enable 32bit
    To add 64bit support re-run the setup.exe select "Add or Remove Features"
    -> Language Tools -> Visual C++. Select "X64Compiler and Tools"
-3. Make sure git package is installed, for example "git bash"  
+3. Verify the git package is properly installed, for example "git bash"  
 
 
 ## Build 
@@ -20,13 +20,13 @@ Get this repository from github: git clone https://github.com/hpcc-systems/HPCC-
 ### HPCC Clienttools
 
 1. git clone https://github.com/hpcc-systems/HPCC-Platform.git
-2. create "build" directory and cd to "build"
+2. create a "build" directory and cd to "build"
 3. cmake -G '<Visual Studio Generator>' -DCMAKE_BUILD_TYPE=<TYPE> -DCHECK_GIT_TAG=0 -DCLIENTTOOLS_ONLY=ON 
          -DEXTERNALS_DIRECTORY=<full path of platform_externals directory of this repository>
          -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
          -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
          -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../HPCC-Platform
-   Tested Visual Studio Generator (version and architecture): 
+   Tested on Visual Studio Generator (version and architecture): 
          Visual Studio 9 2008
          Visual Studio 9 2008 Win64
          Visual Studio 12 2013
@@ -48,7 +48,7 @@ See "Troubleshooting 2" for the workaround. Alternatively user can use VC 12 201
          -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
          -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
          -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../HPCC-Platform
-   Tested Visual Studio Generator (version and architecture): 
+   Tested on Visual Studio Generator (version and architecture): 
          Visual Studio 9 2008
          Visual Studio 9 2008 Win64
          Visual Studio 12 2013
@@ -57,8 +57,7 @@ See "Troubleshooting 2" for the workaround. Alternatively user can use VC 12 201
 4. cmake --build . --config <TYPE>  or build directly from Visual Studio
 
 Currently there is no HPCC Platform Package build step as well as start/stop HPCC processes.
-The HPCC-Platform libraries are mainly used for building other HPCC product, for example
-ODBC Connector, etc.
+The HPCC-Platform libraries are mainly used for building other HPCC products. For example, the ODBC Connector, etc.
 
 
 ### LN Clienttools 
@@ -73,7 +72,7 @@ ODBC Connector, etc.
          -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
          -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
          -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../LN
-   Tested Visual Studio Generator (version and architecture): 
+   Tested on Visual Studio Generator (version and architecture): 
          Visual Studio 9 2008
          Visual Studio 9 2008 Win64
          Visual Studio 12 2013
@@ -96,7 +95,7 @@ ODBC Connector, etc.
          -DUSE_NATIVE_LIBRARIES=OFF -DUSE_PYTHON=OFF -DUSE_V8=OFF -DUSE_JNI=OFF -DUSE_RINSIDE=OFF 
          -DUSE_APR=OFF -DUSE_MYSQL=OFF -DUSE_SQLITE3=OFF -DUSE_XALAN=ON -DUSE_CASSANDRA=OFF
          -DUSE_MEMCACHED=OFF -DUSE_REDIS=OFF ../LN
-   Tested Visual Studio Generator (version and architecture): 
+   Tested on Visual Studio Generator (version and architecture): 
          Visual Studio 9 2008
          Visual Studio 9 2008 Win64
          Visual Studio 12 2013
@@ -109,11 +108,10 @@ ODBC Connector, etc.
 
 ## Troubleshooting 
 
-1. When build HPCC Platform debug version x86 if get "LINK : fatal error LNK1000: Internal error during IncrBuildImage"
-   download VS90-KB948127.exe to fix it. This is a known problem on VS 9 (2008)
+1. When building the HPCC Platform debug version x86, if you get "LINK : fatal error LNK1000: Internal error during IncrBuildImage", download VS90-KB948127.exe to fix it. This is a known issue on VS 9 (2008)
 
-2. When build HPCC debug version x64 code generation doesn't work and get following error install 
-   "http://www.microsoft.com/en-us/download/confirmation.aspx?id=2092
+2. When building the HPCC debug version x64, and code generation doesn't work and/or you get following error, install 
+   "http://www.microsoft.com/en-us/download/confirmation.aspx?id=2092"
 
    The application has failed to start because its side-by-side configuration is incorrect. Please see the
    application event log or use the command-line sxstrace.exe tool for more detail.
@@ -122,5 +120,5 @@ ODBC Connector, etc.
    The root problem is Microsoft.VC90.DebugCRT,processorArchitecture="amd64" could not be found. 
      
    The workaround is to copy c:\Program Files(x86)\Microsoft Visual Studio 9.0\VC\redict\Debug_NonRedist\
-   amd64\Microsoft.VC90.DebugCRT\*.* to <HPCC Build>\bin\Debug, then run build from Visual Studio (Debug x64)
+   amd64\Microsoft.VC90.DebugCRT\*.* to <HPCC Build>\bin\Debug, then run the build from Visual Studio (Debug x64)
 
