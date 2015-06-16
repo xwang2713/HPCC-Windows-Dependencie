@@ -2,8 +2,8 @@
 Following instructions based on current boost version 1.57.0.
 
 1. Download boost from http://sourceforge.net/projects/boost/files/boost/1.57.0/boost_1_57_0.zip/download
-2. Make sure ICU debug/release is built.  See README.md in icu directory for more detail.
-   It is import to have ICU debug libraries available, otherwise boost build will not detect ICU.
+2. Make sure ICU debug/release is built.  See README.md in the icu directory for more detail.
+   It is import to have the ICU debug libraries available, otherwise boost build will not detect ICU.
    Make sure when you run "b2" you see a "- has_icu builds     : yes" message.
 3. unzip and cd to top level boost directory :
    1. bootstrap
@@ -19,7 +19,7 @@ Following instructions based on current boost version 1.57.0.
       <ICU> is the directory that contains ICU "include", "bin64", and "lib64"
       copy 64-bit libraries to boost\windows-x86_64\lib\ 
       boost_regrex-vc90-mt-1.57.*, boost_regrex-vc90-mt-gd-1.57.*,libboost_regex-vc90-mt-1_57.lib and libboost_regex-vc90-mt-gd-1_57.lib 
-      64bit libraries are under bin.v2\libs\regex\build\msvc90\debug\adress-model-64\ and 
+      64-bit libraries are under bin.v2\libs\regex\build\msvc90\debug\adress-model-64\ and 
                                 bin.v2\libs\regex\build\msvc90\release\adress-model-64\  
    4. For x64 debug needs to be built also: 
       .\b2 --with-regex -sICU_PATH=<ICU> variant=debug toolset=msvc-9.0 address-model=64 threading=multi link=static runtime-link=static
